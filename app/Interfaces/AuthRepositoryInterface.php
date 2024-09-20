@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Interfaces;
 
+use App\DTOs\UserDTO;
 
 interface AuthRepositoryInterface
 {
-    public function register(array $request);
+    public function register(UserDTO $request);
     public function verification(array $request);
     public function login(array $request);
     public function logout();

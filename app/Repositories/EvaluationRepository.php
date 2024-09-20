@@ -4,9 +4,9 @@ namespace App\Repositories;
 
 use App\Events\DeleteEvaluationEvent;
 use App\Events\EvaluationCarEvent;
+use App\Interfaces\EvaluationRepositoryInterface;
 use App\Models\Car;
 use App\Models\Evaluation;
-use App\Repositories\EvaluationRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;

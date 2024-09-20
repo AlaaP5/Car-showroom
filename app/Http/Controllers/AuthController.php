@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\UserDTO;
 use App\Http\Requests\AuthValidate;
 use App\Http\Requests\LoginValidate;
 use App\Http\Requests\MoneyValidate;

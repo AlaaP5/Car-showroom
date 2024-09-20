@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Interfaces;
 
+use App\DTOs\CarDTO;
 
 interface CarRepositoryInterface
 {
-    public function store(array $request);
+    public function store(CarDTO $request);
     public function fetchAll();
     public function get($id);
     public function search($name);

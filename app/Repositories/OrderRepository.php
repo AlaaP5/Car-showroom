@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\OrderRepositoryInterface;
 use App\Models\Car;
 use App\Models\Order;
 use App\Models\Sale;

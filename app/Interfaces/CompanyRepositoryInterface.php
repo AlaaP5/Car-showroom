@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Interfaces;
 
+use App\DTOs\CompanyDTO;
 
 interface CompanyRepositoryInterface
 {
-    public function store(array $request);
+    public function store(CompanyDTO $request);
     public function fetchAll();
     public function get($id);
     public function update($id, array $request);

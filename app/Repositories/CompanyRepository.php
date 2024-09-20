@@ -2,18 +2,16 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\CompanyRepositoryInterface;
 use App\Models\Car;
 use App\Models\Company;
 
 class CompanyRepository implements CompanyRepositoryInterface
 {
-    
+
     public function store($request)
     {
-        $input = $request->all();
-        $image = $request->file('image')->getClientOriginalName();
-        $path = $request->file('image')->storeAs('companies', $image, 'files');
-        $input['image'] = asset('files/' . $path);
+        $input = $request->toArray();
         Company::create($input);
         return response()->json(['message' => 'The Company has been added Successfully'], 201);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\FavoriteRepositoryInterface;
 use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;

@@ -2,18 +2,16 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\CarRepositoryInterface;
 use App\Models\Car;
 
 class CarRepository implements CarRepositoryInterface
 {
-    
+
     public function store($request)
     {
         try {
-            $input = $request->all();
-            $image = $request->file('image')->getClientOriginalName();
-            $path = $request->file('image')->storeAs('cars', $image, 'files');
-            $input['image'] = asset('files/' . $path);
+            $input = $request->toArray();
             $input['sumE'] = 0;
             $input['numE'] = 0;
             Car::create($input);

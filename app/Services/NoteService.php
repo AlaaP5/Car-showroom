@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Note;
-use App\Repositories\NoteRepositoryInterface;
-use Illuminate\Support\Facades\Auth;
+use App\Interfaces\NoteRepositoryInterface;
 
 class NoteService
 {
