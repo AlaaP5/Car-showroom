@@ -2,15 +2,16 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\CategoryRepositoryInterface;
 use App\Models\Car;
 use App\Models\Category;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
-    
+
     public function store($request)
     {
-        $input = $request->all();
+        $input = $request->toArray();
         Category::create($input);
         return response()->json(['message' => 'The Category is added Successfully'], 201);
     }

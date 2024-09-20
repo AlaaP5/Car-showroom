@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Repositories\AuthRepositoryInterface;
-
+use App\DTOs\UserDTO;
+use App\Interfaces\AuthRepositoryInterface;
 
 class AuthService
 {
@@ -16,7 +16,15 @@ class AuthService
 
     public function register($request)
     {
-        return $this->authRepository->register($request);
+        $userDTO = UserDTO::fromArray([
+            'FirstName' => $request->FirstName,
+            'LastName' => $request->LastName,
+            'email' => $request->email,
+            'password' => $request->password,
+            'phone_number' => $request->phone_number
+        ]);
+
+        return $this->authRepository->register($userDTO);
     }
 
     public function verification($request)

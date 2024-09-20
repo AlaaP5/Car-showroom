@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\NoteRepositoryInterface;
 use App\Models\Note;
 use Illuminate\Support\Facades\Auth;
 

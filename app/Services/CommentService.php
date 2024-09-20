@@ -2,10 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Comment;
-use App\Models\Post;
-use App\Repositories\CommentRepositoryInterface;
-use Illuminate\Support\Facades\Auth;
+use App\Interfaces\CommentRepositoryInterface;
 
 class CommentService
 {

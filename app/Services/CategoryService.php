@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use App\Repositories\CategoryRepositoryInterface;
+use App\DTOs\CategoryDTO;
+use App\Interfaces\CategoryRepositoryInterface;
 
 class CategoryService
 {
@@ -15,7 +16,10 @@ class CategoryService
 
     public function store($request)
     {
-        return $this->categoryRepository->store($request);
+        $categoryDTO = CategoryDTO::fromArray([
+            'name' => $request->name,
+        ]);
+        return $this->categoryRepository->store($categoryDTO);
     }
 
     public function fetchAll()

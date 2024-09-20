@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Events\CreateUserEvent;
+use App\Interfaces\AuthRepositoryInterface;
 use App\Mail\SendCodeMail;
 use App\Models\User;
 use App\Models\Wallet;
@@ -16,7 +17,8 @@ class AuthRepository implements AuthRepositoryInterface
 
     public function register($request)
     {
-        $input = $request->all();
+        $input = $request->toArray();  // DTO
+
         $input['password'] = Hash::make($input['password']);
         $input['role_id'] = 2;
         $user = User::create($input);

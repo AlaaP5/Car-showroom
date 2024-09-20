@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Interfaces;
 
 
 interface PostRepositoryInterface
@@ -8,7 +8,7 @@ interface PostRepositoryInterface
     public function store(array $request);
     public function fetchAll();
     public function get($id);
-    public function search($name);  
+    public function search($name);
     public function update($id, array $request);
     public function delete($id);
 }

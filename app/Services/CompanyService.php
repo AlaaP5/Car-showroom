@@ -2,9 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Car;
-use App\Models\Company;
-use App\Repositories\CompanyRepositoryInterface;
+use App\DTOs\CompanyDTO;
+use App\Interfaces\CompanyRepositoryInterface;
 
 class CompanyService
 {
@@ -18,7 +17,17 @@ class CompanyService
 
     public function store($request)
     {
-        return $this->companyRepository->store($request);
+        $imagePath = null;
+        if ($request->image) {
+            $image = $request->file('image')->getClientOriginalName();
+            $imagePath = $request->file('image')->storeAs('companies', $image, 'files');
+        }
+        
+        $companyDTO = CompanyDTO::fromArray([
+            'name' => $request->name,
+            'image' => asset('files/' . $imagePath),
+        ]);
+        return $this->companyRepository->store($companyDTO);
     }
 
     public function fetchAll()

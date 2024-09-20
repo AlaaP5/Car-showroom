@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Interfaces;
 
+use App\DTOs\CategoryDTO;
 
 interface CategoryRepositoryInterface
 {
-    public function store(array $request);
+    public function store(CategoryDTO $request);
     public function fetchAll();
     public function get($id);
     public function update($id, array $request);

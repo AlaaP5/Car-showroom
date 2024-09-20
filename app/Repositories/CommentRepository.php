@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Interfaces\CommentRepositoryInterface;
 use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
@@ -12,8 +13,7 @@ class CommentRepository implements CommentRepositoryInterface
     public function store($request)
     {
         $input = $request->all();
-        $id = Auth::id();
-        $input['user_id'] = $id;
+        $input['user_id'] = Auth::id();
         Comment::create($input);
         return response()->json(['message' => 'The Comment has been added Successfully'], 201);
     }
@@ -57,7 +57,7 @@ class CommentRepository implements CommentRepositoryInterface
         return response()->json(['message' => 'you can not delete this a comment'], 403);
     }
 
-    
+
     public function CommentsOfPost($id)
     {
         $post = Post::find($id);

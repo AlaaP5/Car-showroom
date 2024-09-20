@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Repositories\EvaluationRepositoryInterface;
+use App\Interfaces\EvaluationRepositoryInterface;
 
 class EvaluationService
 {
