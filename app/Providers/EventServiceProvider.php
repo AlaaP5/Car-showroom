@@ -2,14 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\AddBookingEvent;
+use App\Events\CancelBookingEvent;
 use App\Events\CreateUserEvent;
-use App\Events\DeleteEvaluationEvent;
-use App\Events\EvaluationCarEvent;
-use App\Events\SendNotificationEvent;
-use App\Listeners\DeleteEvaluationListener;
-use App\Listeners\EvaluationCarListener;
+use App\Listeners\AddBookingListener;
+use App\Listeners\CancelBookingListener;
 use App\Listeners\sendCodeListener;
-use App\Listeners\SendNotificationListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,21 +25,18 @@ class EventServiceProvider extends ServiceProvider
             SendEmailVerificationNotification::class,
         ],
 
-        EvaluationCarEvent::class => [
-            EvaluationCarListener::class,
-        ],
-
         CreateUserEvent::class => [
             sendCodeListener::class,
         ],
 
-        DeleteEvaluationEvent::class => [
-            DeleteEvaluationListener::class,
+        AddBookingEvent::class => [
+            AddBookingListener::class,
         ],
 
-        SendNotificationEvent::class => [
-            SendNotificationListener::class,
+        CancelBookingEvent::class => [
+            CancelBookingListener::class,
         ]
+
 
     ];
 

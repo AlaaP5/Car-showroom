@@ -17,12 +17,12 @@ class UserMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
-        if ($user->role_id == 2  && $user->statusCode == 1) {
+        if ($user->role === 'user'  && $user->statusCode == 1) {
             return $next($request);
         }
 
         return response()->json([
             'message' => 'you are not allowed to'
-        ]);
+        ], 401);
     }
 }

@@ -85,7 +85,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
         ],
 
@@ -118,11 +118,48 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
-        'job_failures' => [
-        'driver' => 'single',
-        'path' => storage_path('logs/job_failures.log'),
-        'level' => 'error',
-    ],
+        'create_booking' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/user_actions/createBooking_'.now()->format('Y-m-d').'.log'),
+            'level' => 'info',
+            'days' => 14
+        ],
+
+        'cancel_booking' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/user_actions/cancelBooking_'.now()->format('Y-m-d').'.log'),
+            'level' => 'info',
+            'days' => 14
+        ],
+
+        'create_trip' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/admin_actions/createTrip_'.now()->format('Y-m-d').'.log'),
+            'level' => 'info',
+            'days' => 14
+        ],
+
+        'update_trip' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/admin_actions/updateTrip_'.now()->format('Y-m-d').'.log'),
+            'level' => 'info',
+            'days' => 14
+        ],
+
+        'changeStatusTrip' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/jobsInBackground/changeStatusTrip_'.now()->format('Y-m-d').'.log'),
+            'level' => 'info',
+            'days' => 14
+        ],
+
+        'deleteOldEmails' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/jobsInBackground/deleteOldEmails_'.now()->format('Y-m-d').'.log'),
+            'level' => 'info',
+            'days' => 14
+        ],
+
     ],
 
 ];

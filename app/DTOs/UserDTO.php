@@ -5,32 +5,26 @@ namespace App\DTOs;
 class UserDTO
 {
     public function __construct(
-        public string $FirstName,
-        public string $LastName,
-        public string $email,
-        public string $password,
-        public string $phone_number
+        public ? string $name = null,
+        public ? string $email = null,
+        public ? string $password = null
     ) {}
 
     public function toArray(): array
     {
         return [
-            'FirstName' => $this->FirstName,
-            'LastName' => $this->LastName,
+            'name' => $this->name,
             'email' => $this->email,
-            'password' => $this->password,
-            'phone_number' => $this->phone_number
+            'password' => $this->password
         ];
     }
 
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['FirstName'],
-            $data['LastName'],
-            $data['email'],
-            $data['password'],
-            $data['phone_number']
+            $data['name'] ?? null,
+            $data['email'] ?? null,
+            $data['password'] ?? null
         );
     }
 }

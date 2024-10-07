@@ -29,7 +29,7 @@ class SendCodeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Cars',
+            subject: 'Trips',
         );
     }
 
@@ -45,7 +45,7 @@ class SendCodeMail extends Mailable
 
     public function build()
     {
-        return $this->from('alaa3012002@gmail.com','CarsShowRoom')->view('post');
+        return $this->from('alaa3012002@gmail.com','Travel Booking')->view('post');
     }
     /**
      * Get the attachments for the message.
@@ -55,7 +55,7 @@ class SendCodeMail extends Mailable
     public function attachments(): array
     {
         return [
-            // Attachment::fromPath(public_path('files/cars/ax.jpeg'))
+            
         ];
     }
 }

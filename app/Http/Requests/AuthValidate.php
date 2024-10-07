@@ -22,11 +22,9 @@ class AuthValidate extends FormRequest
     public function rules(): array
     {
         return [
-            'FirstName' => 'required|string',
-            'LastName' => 'required|string',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'phone_number' => 'required|unique:users',
+            'password' => 'required|min:8|confirmed'
         ];
     }
 }

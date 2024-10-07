@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTOs\UserDTO;
 use App\Interfaces\AuthRepositoryInterface;
+use Illuminate\Http\JsonResponse;
 
 class AuthService
 {
@@ -14,40 +15,27 @@ class AuthService
     }
 
 
-    public function register($request)
+    public function register(UserDTO $userDTO): JsonResponse
     {
-        $userDTO = UserDTO::fromArray([
-            'FirstName' => $request->FirstName,
-            'LastName' => $request->LastName,
-            'email' => $request->email,
-            'password' => $request->password,
-            'phone_number' => $request->phone_number
-        ]);
-
-        return $this->authRepository->register($userDTO);
+        return $this->authRepository->register($userDTO->toArray());
     }
 
-    public function verification($request)
+    public function verification($request): JsonResponse
     {
         return $this->authRepository->verification($request);
     }
 
-    public function login($request)
+    public function login(UserDTO $userDTO): JsonResponse
     {
-        return $this->authRepository->login($request);
+        return $this->authRepository->login($userDTO->toArray());
     }
 
-    public function logout()
+    public function logout(): JsonResponse
     {
         return $this->authRepository->logout();
     }
 
-    public function storeMoney($request)
-    {
-        return $this->authRepository->storeMoney($request);
-    }
-
-    public function sendCode($request)
+    public function sendCode($request): JsonResponse
     {
         return $this->authRepository->sendCode($request);
     }

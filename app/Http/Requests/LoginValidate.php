@@ -22,8 +22,8 @@ class LoginValidate extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required',
-            'password' => 'required'
+            'email' => 'required|email',
+            'password' => 'required|min:8'
         ];
     }
 }

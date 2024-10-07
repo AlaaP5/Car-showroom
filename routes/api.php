@@ -2,15 +2,9 @@
 
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CarController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\EvaluationController;
-use App\Http\Controllers\FavoriteController;
-use App\Http\Controllers\NoteController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\TripController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,114 +23,46 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('Register', [AuthController::class, 'Register']);
-Route::post('Login', [AuthController::class, 'Login']);
 
-Route::middleware('auth:api')->group(function () {
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
 
-    Route::prefix('category')->group(function () {
-        Route::get('all', [CategoryController::class, 'fetchAll']);
-        Route::get('get/{id}', [CategoryController::class, 'fetch']);
-        Route::get('search/{name?}', [CategoryController::class, 'search']);
-        Route::get('cars/{id}', [CategoryController::class, 'CarsOfCategory']);
-    });
 
-    Route::prefix('company')->group(function () {
-        Route::get('all', [CompanyController::class, 'fetchAll']);
-        Route::get('get/{id}', [CompanyController::class, 'fetch']);
-        Route::get('search/{name?}', [CompanyController::class, 'search']);
-        Route::get('cars/{id}', [CompanyController::class, 'CarsOfCompany']);
-    });
+// 'throttle:60,1' =>  rate-limit requests from a particular IP,prevents DDOS attacks
+Route::middleware('auth:api','throttle:60,1')->group(function () {
 
-    Route::prefix('car')->group(function () {
-        Route::get('all', [CarController::class, 'fetchAll']);
-        Route::get('get/{id}', [CarController::class, 'fetch']);
-        Route::get('search/{name?}', [CarController::class, 'search']);
-    });
+    Route::post('verification', [AuthController::class, 'verification']);
 
-    Route::prefix('post')->group(function () {
-        Route::get('all', [PostController::class, 'fetchAll']);
-        Route::get('get/{id}', [PostController::class, 'fetch']);
-        Route::get('search/{name?}', [PostController::class, 'search']);
-    });
+    Route::get('trip/index', [TripController::class, 'indexOfTrip']);
+    Route::get('destination/index', [DestinationController::class, 'indexOfDestination']);
 
-    Route::get('comment/comments/{id}', [CommentController::class, 'CommentsOfPost']);
-
-    Route::get('evaluation/evaluations/{id}', [EvaluationController::class, 'evaluationsOfCar']);
-
-    Route::get('logout', [AuthController::class, 'Logout']);
 
     Route::middleware('check_Admin')->group(function () {
 
-        Route::prefix('category')->group(function () {
-            Route::post('add', [CategoryController::class, 'store']);
-            Route::post('update/{id}', [CategoryController::class, 'updateCategory']);
-            Route::delete('delete/{id}', [CategoryController::class, 'deleteCategory']);
+        Route::prefix('destination')->group(function () {
+            Route::post('create', [DestinationController::class, 'createDestination']);
+            Route::get('show/{id}', [DestinationController::class, 'showDestination']);
+            Route::post('update', [DestinationController::class, 'updateDestination']);
+            Route::delete('destroy/{id}', [DestinationController::class, 'destroyDestination']);
+            Route::get('trips/{id}',[DestinationController::class, 'tripsOfDestination']);
         });
 
-        Route::prefix('company')->group(function () {
-            Route::post('add', [CompanyController::class, 'store']);
-            Route::post('update/{id}', [CompanyController::class, 'updateCompany']);
-            Route::delete('delete/{id}', [CompanyController::class, 'deleteCompany']);
+        Route::prefix('trip')->group(function () {
+            Route::post('create', [TripController::class, 'createTrip']);
+            Route::get('show/{id}', [TripController::class, 'showTrip']);
+            Route::post('update', [TripController::class, 'updateTrip']);
+            Route::delete('destroy/{id}', [TripController::class, 'destroyTrip']);
         });
-
-        Route::prefix('car')->group(function () {
-            Route::post('add', [CarController::class, 'store']);
-            Route::post('update/{id}', [CarController::class, 'updateCar']);
-            Route::delete('delete/{id}', [CarController::class, 'deleteCar']);
-        });
-
-        Route::prefix('post')->group(function () {
-            Route::post('add', [PostController::class, 'store']);
-            Route::post('update/{id}', [PostController::class, 'updatePost']);
-            Route::delete('delete/{id}', [PostController::class, 'deletePost']);
-        });
-
-        Route::prefix('order')->group(function () {
-            Route::get('all', [OrderController::class, 'AllOrders']);
-            Route::get('Process/{id}', [OrderController::class, 'ProcessOrder']);
-            Route::post('profit', [OrderController::class, 'CalculateProfit']);
-        });
-
-        Route::post('wallet/store', [AuthController::class, 'storeMoney']);
     });
-
-    Route::post('code', [AuthController::class, 'Verification']);
 
     Route::middleware('check_User')->group(function () {
 
-        Route::prefix('comment')->group(function () {
-            Route::post('add', [CommentController::class, 'store']);
-            Route::get('get/{id}', [CommentController::class, 'fetch']);
-            Route::post('update/{id}', [CommentController::class, 'updateComment']);
-            Route::delete('delete/{id}', [CommentController::class, 'deleteComment']);
+        Route::prefix('booking')->group(function () {
+            Route::post('create', [BookingController::class, 'createBooking']);
+            Route::delete('destroy/{id}', [BookingController::class, 'destroyBooking']);
         });
 
-        Route::prefix('note')->group(function () {
-            Route::post('add', [NoteController::class, 'store']);
-            Route::get('all', [NoteController::class, 'fetchAll']);
-            Route::get('get/{id}', [NoteController::class, 'fetch']);
-            Route::post('update/{id}', [NoteController::class, 'updateNote']);
-            Route::delete('delete/{id}', [NoteController::class, 'deleteNote']);
-        });
-
-        Route::prefix('evaluation')->group(function () {
-            Route::post('add', [EvaluationController::class, 'store']);
-            Route::get('get/{id}', [EvaluationController::class, 'fetch']);
-            Route::delete('delete/{id}', [EvaluationController::class, 'deleteEvaluation']);
-        });
-
-        Route::prefix('favorite')->group(function () {
-            Route::post('add', [FavoriteController::class, 'store']);
-            Route::get('cars', [FavoriteController::class, 'favoriteOfCars']);
-            Route::delete('delete/{id}', [FavoriteController::class, 'deleteFromFavorite']);
-        });
-
-        Route::prefix('order')->group(function () {
-            Route::post('card', [OrderController::class, 'store']);
-            Route::get('getContent/{id}', [OrderController::class, 'orderContent']);
-            Route::get('myOrders', [OrderController::class, 'myOrders']);
-            Route::post('history', [OrderController::class, 'history']);
-        });
     });
+
+    Route::get('logout', [AuthController::class, 'logout']);
 });

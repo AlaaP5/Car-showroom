@@ -5,40 +5,39 @@ namespace App\Http\Controllers;
 use App\DTOs\UserDTO;
 use App\Http\Requests\AuthValidate;
 use App\Http\Requests\LoginValidate;
-use App\Http\Requests\MoneyValidate;
 use App\Http\Requests\VerificationValidate;
 use App\Services\AuthService;
+use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-    protected $auth;
+    protected AuthService $auth;
     public function __construct(AuthService $authService)
     {
         $this->auth = $authService;
     }
 
-    public function Register(AuthValidate $request)
+    public function register(AuthValidate $request): JsonResponse
     {
-        return $this->auth->register($request);
+        $userDTO = UserDTO::fromArray($request->validated());
+
+        return $this->auth->register($userDTO);
     }
 
-    public function Verification(VerificationValidate $request)
+    public function verification(VerificationValidate $request): JsonResponse
     {
         return $this->auth->verification($request);
     }
 
-    public function Login(LoginValidate $request)
+    public function login(LoginValidate $request): JsonResponse
     {
-        return $this->auth->login($request);
+        $loginDTO = UserDTO::fromArray($request->validated());
+
+        return $this->auth->login($loginDTO);
     }
 
-    public function Logout()
+    public function logout(): JsonResponse
     {
         return $this->auth->logout();
-    }
-
-    public function storeMoney(MoneyValidate $request)
-    {
-        return $this->auth->storeMoney($request);
     }
 }
